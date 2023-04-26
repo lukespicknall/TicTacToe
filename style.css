@@ -1,3 +1,7 @@
-* {
+/* * {
     background-color: aqua;
+} */
+
+#game-box {
+    min-height: 200px;
 }
