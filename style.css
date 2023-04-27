@@ -4,4 +4,22 @@
 
 #game-box {
     min-height: 200px;
+    display: flex;
+    justify-content: stretch;
+    align-content: stretch;
+}
+
+.game-board { 
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3,  1fr);
+    gap: 5px;
+    width: 100%;
+}
+
+.game-square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+    border-radius: 25px;
 }
