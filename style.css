@@ -16,7 +16,7 @@
     width: 100%;
 }
 
-.game-square {
+.square {
     display: flex;
     justify-content: center;
     align-items: center;

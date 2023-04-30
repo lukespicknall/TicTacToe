@@ -1,26 +1,33 @@
-const gameBox = document.querySelector('#game-box');
+const Player = (mark, score) => {
+  const getMark = () => mark;
+  const getScore = () => score;
+  return { getMark, getScore };
+};
 
-// have to call createBoard.markConatiner to get []
-const createBoard = (() => {
-  const markContainer = ['x', 'o', 'x', 'o', 'x', 'o', 'x'];
-  const gameBoard = document.createElement('div');
-  gameBoard.className = 'game-board';
-  for (let i = 0; i < markContainer.length; i += 1) {
-    const square = document.createElement('div');
-    square.id = i;
-    square.className = 'game-square';
-    square.textContent = markContainer[i];
-    gameBoard.appendChild(square);
-  }
-  gameBox.appendChild(gameBoard);
-  gameBox.style.border = 'solid 5px red';
-  return { markContainer };
+// have to call createBoard.markBox to get []
+const gameboard = (() => {
+  const square = document.querySelectorAll('.square');
+  const markBox = ['x', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'];
+
+  const setBoard = (() => {
+    for (let i = 0; i < markBox.length; i += 1) {
+      square[i].textContent = markBox[i];
+    }
+  });
+
+  // use this later to update markBox with playerMarks
+  const setMark = ((squareId, playerMark) => {
+    markBox[squareId] = playerMark;
+    setBoard();
+  });
+  return { setBoard, setMark, markBox };
 })();
 
 // const Player = (mark) => {
 
 // };
 
+// if (markBox.length % 2 === 0
 
-// if (markContainer.length % 2 === 0
-
+// const playerX = Player('X', 0);
+// const playerO = Player('O', 0);
