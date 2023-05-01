@@ -40,7 +40,21 @@ const gameboard = (() => {
 const game = () => {
   const playerX = Player('X', 0);
   const playerO = Player('O', 0);
-  let turn = 1
+  let turn = '1';
+
+  const getTurn = () => {
+    if (turn % 2 === 0)
+        
+    }
+  }
+
+  const play = () => {
+    const square = document.querySelectorAll('.square');
+    if (turn >= '9') return;
+    square.addEventListener('click', () {
+
+    })
+  }
 };
 
 // const Player = (mark) => {
