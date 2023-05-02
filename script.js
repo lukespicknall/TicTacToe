@@ -7,7 +7,7 @@ const Player = (mark, score) => {
 // have to call createBoard.markBox to get []
 const gameboard = (() => {
   const square = document.querySelectorAll('.square');
-  const markBox = ['x', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'];
+  const markBox = ['', '', '', '', '', '', '', '', ''];
 
   // loops over markBox and displays each index on each game square
   const setBoard = () => {
@@ -37,25 +37,37 @@ const gameboard = (() => {
   return { setBoard, setMark, reset };
 })();
 
-const game = () => {
+const game = (() => {
   const playerX = Player('X', 0);
   const playerO = Player('O', 0);
-  let turn = '1';
+  let turn = 1;
 
+  // determines whose turn it is
   const getTurn = () => {
-    if (turn % 2 === 0)
-        
+    if ((turn % 2) === 0) {
+      const currentPlayer = playerX;
+      return { currentPlayer };
     }
-  }
-
-  const play = () => {
+    const currentPlayer = playerO;
+    return { currentPlayer };
+  };
+  // listen for click on each game square and adds
+  // playerMark to square associated with squareID. advances turn count
+  const play = (() => {
     const square = document.querySelectorAll('.square');
-    if (turn >= '9') return;
-    square.addEventListener('click', () {
+    square.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        if (turn >= 9) return;
+        turn++;
+        const squareId = e.target.id;
+        const playerMark = getTurn().currentPlayer.getMark();
+        gameboard.setMark(squareId, playerMark);
+      });
+    });
+  })();
 
-    })
-  }
-};
+  return { getTurn, play, turn };
+})();
 
 // const Player = (mark) => {
 
