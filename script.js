@@ -29,6 +29,7 @@ const gameboard = (() => {
     resetButton.addEventListener('click', () => {
       for (let i = 0; i < markBox.length; i += 1) {
         markBox[i] = '';
+        game.turn = 1;
       }
       setBoard();
     });
@@ -51,14 +52,15 @@ const game = (() => {
     const currentPlayer = playerO;
     return { currentPlayer };
   };
+
   // listen for click on each game square and adds
   // playerMark to square associated with squareID. advances turn count
   const play = (() => {
     const square = document.querySelectorAll('.square');
     square.forEach((item) => {
       item.addEventListener('click', (e) => {
-        if (turn >= 9) return;
-        turn++;
+        if (turn > 9 || e.target.textContent !== '') return;
+        turn += 1;
         const squareId = e.target.id;
         const playerMark = getTurn().currentPlayer.getMark();
         gameboard.setMark(squareId, playerMark);
