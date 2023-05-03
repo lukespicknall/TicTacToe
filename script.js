@@ -5,9 +5,10 @@ const Player = (mark, score) => {
 };
 
 // have to call createBoard.markBox to get []
-const gameboard = (() => {
+const gameBoard = (() => {
   const square = document.querySelectorAll('.square');
   const markBox = ['', '', '', '', '', '', '', '', ''];
+  const turn = 1;
 
   // loops over markBox and displays each index on each game square
   const setBoard = () => {
@@ -23,29 +24,30 @@ const gameboard = (() => {
     setBoard();
   };
 
-  // can be called to clear board
+  // can be called to clear board and array and set turn count to 1
   const reset = (() => {
     const resetButton = document.querySelector('.resetBtn');
     resetButton.addEventListener('click', () => {
       for (let i = 0; i < markBox.length; i += 1) {
         markBox[i] = '';
-        game.turn = 1;
       }
+      gameBoard.turn = 1;
       setBoard();
     });
   })();
 
-  return { setBoard, setMark, reset };
+  return {
+    setBoard, setMark, reset, turn,
+  };
 })();
 
 const game = (() => {
   const playerX = Player('X', 0);
   const playerO = Player('O', 0);
-  let turn = 1;
 
   // determines whose turn it is
-  const getTurn = () => {
-    if ((turn % 2) === 0) {
+  const getPlayerTurn = () => {
+    if ((gameBoard.turn % 2) === 0) {
       const currentPlayer = playerX;
       return { currentPlayer };
     }
@@ -59,23 +61,14 @@ const game = (() => {
     const square = document.querySelectorAll('.square');
     square.forEach((item) => {
       item.addEventListener('click', (e) => {
-        if (turn > 9 || e.target.textContent !== '') return;
-        turn += 1;
+        if (gameBoard.turn > 9 || e.target.textContent !== '') return;
+        gameBoard.turn += 1;
         const squareId = e.target.id;
-        const playerMark = getTurn().currentPlayer.getMark();
-        gameboard.setMark(squareId, playerMark);
+        const playerMark = getPlayerTurn().currentPlayer.getMark();
+        gameBoard.setMark(squareId, playerMark);
       });
     });
   })();
 
-  return { getTurn, play, turn };
+  return { getPlayerTurn, play };
 })();
-
-// const Player = (mark) => {
-
-// };
-
-// if (markBox.length % 2 === 0
-
-// const playerX = Player('X', 0);
-// const playerO = Player('O', 0);
