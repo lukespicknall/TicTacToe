@@ -36,8 +36,20 @@ const gameBoard = (() => {
     });
   })();
 
+  // checks markBox for mark and creates new array with each mark instance's index
+  // frankly i dont quite understand this array manipulation . . .
+  const checkWinner = () => {
+    const xChecker = markBox.map((mark, idx) => (mark === 'X' ? idx : '')).filter(String);
+    console.log(xChecker);
+    const oChecker = markBox.map((mark, idx) => (mark === 'O' ? idx : '')).filter(String);
+    console.log(oChecker);
+    // const checker = markBox.filter((mark) => mark.includes('X'));
+    // console.log(checker);
+    // return { checker };
+  };
+
   return {
-    setBoard, setMark, reset, turn,
+    setBoard, setMark, reset, turn, checkWinner,
   };
 })();
 
@@ -66,6 +78,7 @@ const game = (() => {
         const squareId = e.target.id;
         const playerMark = getPlayerTurn().currentPlayer.getMark();
         gameBoard.setMark(squareId, playerMark);
+        gameBoard.checkWinner();
       });
     });
   })();
