@@ -25,6 +25,7 @@ const gameBoard = (() => {
   };
 
   // can be called to clear board and array and set turn count to 1
+  // and clear store of player occupied squares x/oSpots
   const reset = (a, b) => {
     for (let i = 0; i < markBox.length; i += 1) {
       markBox[i] = '';
@@ -76,6 +77,9 @@ const game = (() => {
     return { currentPlayer };
   };
 
+  // takes 2 params x/oSpots and checks if every element in each winCombo item
+  // matches the current contents of either x/oSpot array
+  // if it does, do stuff
   const checkWinner = (a, b) => {
     const winCombo = [
       [0, 1, 2],
@@ -114,8 +118,6 @@ const game = (() => {
         const squareId = e.target.id;
         const playerMark = getPlayerTurn().currentPlayer.getMark();
         gameBoard.setMark(squareId, playerMark);
-        // gameBoard.checkWinner();
-
         // another way to get index #s into arrays to check for winner.
         // use this or gameboard checkWinner function
         if (playerMark === 'X') xSpots.push(parseInt(squareId, 10)); // the 10 is radix# and just means base 10
@@ -126,6 +128,7 @@ const game = (() => {
     return { xSpots, oSpots };
   })();
 
+  // listens to button click and calls reset(), passing x.oSpot arrays.
   const resetClick = (() => {
     const resetButton = document.querySelector('.resetBtn');
     resetButton.addEventListener('click', () => {
