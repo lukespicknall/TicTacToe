@@ -26,13 +26,17 @@ const gameBoard = (() => {
 
   // can be called to clear board and array and set turn count to 1
   const reset = (() => {
+    for (let i = 0; i < markBox.length; i += 1) {
+      markBox[i] = '';
+    }
+    gameBoard.turn = 1;
+    setBoard();
+  });
+
+  const resetClick = (() => {
     const resetButton = document.querySelector('.resetBtn');
     resetButton.addEventListener('click', () => {
-      for (let i = 0; i < markBox.length; i += 1) {
-        markBox[i] = '';
-      }
-      gameBoard.turn = 1;
-      setBoard();
+      reset();
     });
   })();
 
@@ -51,7 +55,7 @@ const gameBoard = (() => {
   // };
 
   return {
-    setBoard, setMark, reset, turn,
+    setBoard, setMark, reset, turn, resetClick,
     // checkWinner,
   };
 })();
@@ -68,6 +72,31 @@ const game = (() => {
     }
     const currentPlayer = playerO;
     return { currentPlayer };
+  };
+
+  const checkWinner = (a, b) => {
+    const winCombo = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < winCombo.length; i += 1) {
+      const xWin = winCombo[i].every((n) => a.includes(n));
+      const oWin = winCombo[i].every((n) => b.includes(n));
+      if (xWin === true) {
+        alert('x wins');
+        gameBoard.reset();
+        return;
+      } if (oWin === true) {
+        alert('o wins');
+        gameBoard.reset();
+      }
+    }
   };
 
   // listen for click on each game square and adds
@@ -89,15 +118,10 @@ const game = (() => {
         // use this or gameboard checkWinner function
         if (playerMark === 'X') xSpots.push(parseInt(squareId, 10)); // the 10 is radix# and just means base 10
         if (playerMark === 'O') oSpots.push(parseInt(squareId, 10));
+        checkWinner(xSpots, oSpots);
       });
     });
-    return { xSpots, oSpots };
   })();
 
-  const checkWinner = () => {
-    const winningCombo = []
-    play.xSpots.includes()
-  }
-
-  return { getPlayerTurn, play };
+  return { getPlayerTurn, play, checkWinner };
 })();
