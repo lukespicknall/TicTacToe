@@ -25,20 +25,22 @@ const gameBoard = (() => {
   };
 
   // can be called to clear board and array and set turn count to 1
-  const reset = (() => {
+  const reset = (a, b) => {
     for (let i = 0; i < markBox.length; i += 1) {
       markBox[i] = '';
     }
+    a.splice(0, a.length);
+    b.splice(0, b.length);
     gameBoard.turn = 1;
     setBoard();
-  });
+  };
 
-  const resetClick = (() => {
-    const resetButton = document.querySelector('.resetBtn');
-    resetButton.addEventListener('click', () => {
-      reset();
-    });
-  })();
+  // const resetClick = (() => {
+  //   const resetButton = document.querySelector('.resetBtn');
+  //   resetButton.addEventListener('click', () => {
+  //     reset(a, b);
+  //   });
+  // })();
 
   // checks markBox for mark and creates new array with each mark instance's index
   // frankly i dont quite understand this array manipulation . . .
@@ -55,7 +57,7 @@ const gameBoard = (() => {
   // };
 
   return {
-    setBoard, setMark, reset, turn, resetClick,
+    setBoard, setMark, reset, turn,
     // checkWinner,
   };
 })();
@@ -90,11 +92,11 @@ const game = (() => {
       const oWin = winCombo[i].every((n) => b.includes(n));
       if (xWin === true) {
         alert('x wins');
-        gameBoard.reset();
+        gameBoard.reset(a, b);
         return;
       } if (oWin === true) {
         alert('o wins');
-        gameBoard.reset();
+        gameBoard.reset(a, b);
       }
     }
   };
@@ -121,7 +123,17 @@ const game = (() => {
         checkWinner(xSpots, oSpots);
       });
     });
+    return { xSpots, oSpots };
   })();
 
-  return { getPlayerTurn, play, checkWinner };
+  const resetClick = (() => {
+    const resetButton = document.querySelector('.resetBtn');
+    resetButton.addEventListener('click', () => {
+      gameBoard.reset(play.xSpots, play.oSpots);
+    });
+  })();
+
+  return {
+    getPlayerTurn, play, checkWinner, resetClick,
+  };
 })();
