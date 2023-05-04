@@ -94,5 +94,10 @@ const game = (() => {
     return { xSpots, oSpots };
   })();
 
+  const checkWinner = () => {
+    const winningCombo = []
+    play.xSpots.includes()
+  }
+
   return { getPlayerTurn, play };
 })();
