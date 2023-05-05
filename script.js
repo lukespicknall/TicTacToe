@@ -9,6 +9,7 @@ const gameBoard = (() => {
   const square = document.querySelectorAll('.square');
   const markBox = ['', '', '', '', '', '', '', '', ''];
   const turn = 1;
+  const gameOver = false;
 
   // loops over markBox and displays each index on each game square
   const setBoard = () => {
@@ -33,32 +34,12 @@ const gameBoard = (() => {
     a.splice(0, a.length);
     b.splice(0, b.length);
     gameBoard.turn = 1;
+    gameBoard.gameOver = false;
     setBoard();
   };
 
-  // const resetClick = (() => {
-  //   const resetButton = document.querySelector('.resetBtn');
-  //   resetButton.addEventListener('click', () => {
-  //     reset(a, b);
-  //   });
-  // })();
-
-  // checks markBox for mark and creates new array with each mark instance's index
-  // frankly i dont quite understand this array manipulation . . .
-
-  // const checkWinner = () => {
-  //   const xChecker = markBox.map((mark, idx) => (mark === 'X' ? idx : '')).filter(String);
-  //   console.log(xChecker);
-  //   const oChecker = markBox.map((mark, idx) => (mark === 'O' ? idx : '')).filter(String);
-  //   console.log(oChecker);
-  // another approach . . . .
-  // const checker = markBox.filter((mark) => mark.includes('X'));
-  // console.log(checker);
-  // return { checker };
-  // };
-
   return {
-    setBoard, setMark, reset, turn,
+    setBoard, setMark, reset, turn, gameOver,
     // checkWinner,
   };
 })();
@@ -81,6 +62,7 @@ const game = (() => {
   // matches the current contents of either x/oSpot array
   // if it does, do stuff
   const checkWinner = (a, b) => {
+    const gameStat = document.querySelector('.game-stat');
     const winCombo = [
       [0, 1, 2],
       [3, 4, 5],
@@ -95,12 +77,12 @@ const game = (() => {
       const xWin = winCombo[i].every((n) => a.includes(n));
       const oWin = winCombo[i].every((n) => b.includes(n));
       if (xWin === true) {
-        alert('x wins');
-        gameBoard.reset(a, b);
-        return;
+        gameStat.textContent = 'xwins';
+        gameBoard.gameOver = true;
       } if (oWin === true) {
-        alert('o wins');
-        gameBoard.reset(a, b);
+        gameStat.textContent = 'owins';
+        gameBoard.gameOver = true;
+        // gameOver = true;
       }
     }
   };
@@ -113,7 +95,7 @@ const game = (() => {
     const square = document.querySelectorAll('.square');
     square.forEach((item) => {
       item.addEventListener('click', (e) => {
-        if (gameBoard.turn > 9 || e.target.textContent !== '') return;
+        if (gameBoard.turn > 9 || e.target.textContent !== '' || gameBoard.gameOver === true) return;
         gameBoard.turn += 1;
         const squareId = e.target.id;
         const playerMark = getPlayerTurn().currentPlayer.getMark();
