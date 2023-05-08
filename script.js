@@ -8,8 +8,6 @@ const Player = (mark, score) => {
 const gameBoard = (() => {
   const square = document.querySelectorAll('.square');
   const markBox = ['', '', '', '', '', '', '', '', ''];
-  const turn = 1;
-  const gameOver = false;
 
   // loops over markBox and displays each index on each game square
   const setBoard = () => {
@@ -33,24 +31,25 @@ const gameBoard = (() => {
     }
     a.splice(0, a.length);
     b.splice(0, b.length);
-    gameBoard.turn = 1;
-    gameBoard.gameOver = false;
     setBoard();
   };
 
-  return {
-    setBoard, setMark, reset, turn, gameOver,
-    // checkWinner,
-  };
+  return { setBoard, setMark, reset };
 })();
 
+// ** MODULE CONTAINING GAME FLOW FUNCTIONALITY **:
+// Player initiation, Get current Turn, Check if someone won
+// Play game (click event to set mark), reser click event
 const game = (() => {
   const playerX = Player('X', 0);
   const playerO = Player('O', 0);
+  let turn = 1;
+  let gameOver = false;
+  const gameStat = document.querySelector('.game-stat');
 
   // determines whose turn it is
   const getPlayerTurn = () => {
-    if ((gameBoard.turn % 2) === 0) {
+    if ((turn % 2) === 0) {
       const currentPlayer = playerX;
       return { currentPlayer };
     }
@@ -62,7 +61,6 @@ const game = (() => {
   // matches the current contents of either x/oSpot array
   // if it does, do stuff
   const checkWinner = (a, b) => {
-    const gameStat = document.querySelector('.game-stat');
     const winCombo = [
       [0, 1, 2],
       [3, 4, 5],
@@ -77,13 +75,19 @@ const game = (() => {
       const xWin = winCombo[i].every((n) => a.includes(n));
       const oWin = winCombo[i].every((n) => b.includes(n));
       if (xWin === true) {
-        gameStat.textContent = 'xwins';
-        gameBoard.gameOver = true;
+        gameStat.textContent = 'X WINS!';
+        gameOver = true;
       } if (oWin === true) {
-        gameStat.textContent = 'owins';
-        gameBoard.gameOver = true;
-        // gameOver = true;
+        gameStat.textContent = 'O WINS!';
+        gameOver = true;
       }
+    }
+  };
+
+  const callDraw = () => {
+    if (turn === 10 && gameOver === false) {
+      gameStat.textContent = 'Draw';
+      gameOver = true;
     }
   };
 
@@ -95,30 +99,46 @@ const game = (() => {
     const square = document.querySelectorAll('.square');
     square.forEach((item) => {
       item.addEventListener('click', (e) => {
-        if (gameBoard.turn > 9 || e.target.textContent !== '' || gameBoard.gameOver === true) return;
-        gameBoard.turn += 1;
+        if (turn > 9 || e.target.textContent !== '' || gameOver === true) return;
+        gameStat.textContent = ':)';
+        turn += 1;
         const squareId = e.target.id;
         const playerMark = getPlayerTurn().currentPlayer.getMark();
         gameBoard.setMark(squareId, playerMark);
         // another way to get index #s into arrays to check for winner.
         // use this or gameboard checkWinner function
-        if (playerMark === 'X') xSpots.push(parseInt(squareId, 10)); // the 10 is radix# and just means base 10
-        if (playerMark === 'O') oSpots.push(parseInt(squareId, 10));
+        if (playerMark === 'X') {
+          xSpots.push(parseInt(squareId, 10));
+          item.classList.add('x-square');
+        } // the 10 is radix# and just means base 10
+        if (playerMark === 'O') {
+          oSpots.push(parseInt(squareId, 10));
+          item.classList.add('o-square');
+        }
         checkWinner(xSpots, oSpots);
+        callDraw();
+        gameStat.style.display = 'block';
       });
     });
-    return { xSpots, oSpots };
+    return { xSpots, oSpots, square };
   })();
 
   // listens to button click and calls reset(), passing x.oSpot arrays.
   const resetClick = (() => {
     const resetButton = document.querySelector('.resetBtn');
+    const square = document.querySelectorAll('.square');
     resetButton.addEventListener('click', () => {
       gameBoard.reset(play.xSpots, play.oSpots);
+      gameStat.textContent = '';
+      turn = 1;
+      gameOver = false;
+      square.forEach((item) => {
+        item.classList.remove('x-square');
+        item.classList.remove('o-square');
+      });
+      gameStat.textContent = 'X GOES FIRST';
     });
   })();
 
-  return {
-    getPlayerTurn, play, checkWinner, resetClick,
-  };
+  return { getPlayerTurn, resetClick };
 })();
