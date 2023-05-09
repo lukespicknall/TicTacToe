@@ -76,9 +76,13 @@ const game = (() => {
       const oWin = winCombo[i].every((n) => b.includes(n));
       if (xWin === true) {
         gameStat.textContent = 'X WINS!';
+        gameStat.style.transform = 'none';
+
         gameOver = true;
       } if (oWin === true) {
         gameStat.textContent = 'O WINS!';
+        gameStat.style.transform = 'none';
+
         gameOver = true;
       }
     }
@@ -87,6 +91,8 @@ const game = (() => {
   const callDraw = () => {
     if (turn === 10 && gameOver === false) {
       gameStat.textContent = 'Draw';
+      gameStat.style.transform = 'none';
+
       gameOver = true;
     }
   };
@@ -101,7 +107,10 @@ const game = (() => {
       item.addEventListener('click', (e) => {
         if (turn > 9 || e.target.textContent !== '' || gameOver === true) return;
         gameStat.textContent = ':)';
+        if (turn === 1) gameStat.style.transform = 'rotate(90deg)';
+        if (turn > 1) gameStat.style.transform = `rotate(${turn * 55}deg)`;
         turn += 1;
+        gameStat.style.display = 'block';
         const squareId = e.target.id;
         const playerMark = getPlayerTurn().currentPlayer.getMark();
         gameBoard.setMark(squareId, playerMark);
@@ -117,7 +126,7 @@ const game = (() => {
         }
         checkWinner(xSpots, oSpots);
         callDraw();
-        gameStat.style.display = 'block';
+        // eslint-disable-next-line quotes
       });
     });
     return { xSpots, oSpots, square };
