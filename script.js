@@ -106,8 +106,8 @@ const game = (() => {
     square.forEach((item) => {
       item.addEventListener('click', (e) => {
         if (turn > 9 || e.target.textContent !== '' || gameOver === true) return;
-        gameStat.textContent = ':)';
-        if (turn === 1) gameStat.style.transform = 'rotate(90deg)';
+        gameStat.textContent = '😂';
+        // if (turn === 1) gameStat.style.transform = 'rotate(90deg)';
         if (turn > 1) gameStat.style.transform = `rotate(${turn * 55}deg)`;
         turn += 1;
         gameStat.style.display = 'block';
