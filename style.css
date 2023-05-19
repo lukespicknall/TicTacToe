@@ -1,3 +1,8 @@
+@font-face {
+    font-family: tester;
+    src: url(Roboto-Regular.ttf);
+}
+
 :root {
     --main-orange: rgb(255, 218, 163);
     --light-purp: rgb(233, 228, 255);
@@ -5,6 +10,7 @@
 }
 
 * {
+    font-family: tester;
     padding: 0;
     margin: 0;
 }
@@ -51,29 +57,53 @@ body {
     transition: all ease-in-out .4s;
 }
 
+.x-stat,
+.o-stat {
+    display: grid;
+    grid-template-rows: 1fr 1fr 6fr;
+    grid-template-columns: 1fr;
+    border-radius: 50%;
+    padding-top: 10px;
+}
+
 .x-stat {
     grid-area: xstat;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 10px;
     background-color: var(--light-purp);
     border: 5px solid var(--dark-purp);
-    border-radius: 50%;
     margin-right: 30px;
 }
 
 .o-stat {
     grid-area: ostat;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 10px;
     background-color: var(--dark-purp);
     border: 5px solid var(--light-purp);
     color: white;
-    border-radius: 50%;
     margin-left: 30px;
+}
+
+.play-head,
+.score-head,
+#x-score,
+#o-score {
+display: flex;
+}
+
+.play-head {
+justify-content: center;
+align-items: flex-end;
+font-size: 500%;
+
+}  
+
+.score-head {
+justify-content: center;
+align-items: center;
+}
+
+#x-score,
+#o-score {
+justify-content: center;
+font-size: 955%;
 }
 
 #game-box {
@@ -134,7 +164,6 @@ body {
     align-items: center;
     border: 5px solid rgb(230, 110, 110);
     background-color: rgb(255, 230, 230);
-    font-size: 1em;
     width: 30%;
     height: 50%;
     border-radius: 25px;
