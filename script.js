@@ -43,13 +43,13 @@ const gameBoard = (() => {
 const game = (() => {
   const playerX = Player('X', 0);
   const playerO = Player('O', 0);
-  let turn = 1;
+  let turn = 0;
   let gameOver = false;
   const gameStat = document.querySelector('.game-stat');
 
   // determines whose turn it is
   const getPlayerTurn = () => {
-    if ((turn % 2) === 0) {
+    if ((turn % 2) !== 0) {
       const currentPlayer = playerX;
       return { currentPlayer };
     }
@@ -89,7 +89,7 @@ const game = (() => {
   };
 
   const callDraw = () => {
-    if (turn === 10 && gameOver === false) {
+    if (turn === 9 && gameOver === false) {
       gameStat.textContent = 'Draw';
       gameStat.style.transform = 'none';
 
@@ -105,12 +105,12 @@ const game = (() => {
     const square = document.querySelectorAll('.square');
     square.forEach((item) => {
       item.addEventListener('click', (e) => {
-        if (turn > 9 || e.target.textContent !== '' || gameOver === true) return;
+        if (turn > 8 || e.target.textContent !== '' || gameOver === true) return;
+        gameStat.style.display = 'block';
         gameStat.textContent = '😂';
         // if (turn === 1) gameStat.style.transform = 'rotate(90deg)';
-        if (turn > 1) gameStat.style.transform = `rotate(${turn * 55}deg)`;
+        if (turn > 0) gameStat.style.transform = `rotate(${turn * 50}deg)`;
         turn += 1;
-        gameStat.style.display = 'block';
         const squareId = e.target.id;
         const playerMark = getPlayerTurn().currentPlayer.getMark();
         gameBoard.setMark(squareId, playerMark);
@@ -138,14 +138,14 @@ const game = (() => {
     const square = document.querySelectorAll('.square');
     resetButton.addEventListener('click', () => {
       gameBoard.reset(play.xSpots, play.oSpots);
-      gameStat.textContent = '';
-      turn = 1;
+      gameStat.style.transform = 'none';
+      gameStat.textContent = 'X GOES FIRST';
+      turn = 0;
       gameOver = false;
       square.forEach((item) => {
         item.classList.remove('x-square');
         item.classList.remove('o-square');
       });
-      gameStat.textContent = 'X GOES FIRST';
     });
   })();
 

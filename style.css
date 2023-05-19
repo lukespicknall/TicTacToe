@@ -20,13 +20,15 @@ body {
 .box {
     height: 100vh;
     width: 100vw;
+    min-width: 850px;
     display: grid;
     grid-template-areas: 
     'header header header'
     'xstat gamebox ostat'
     'footer footer footer'
     ;
-    grid-template-rows: 1fr 3fr 1fr;
+    gap: 10px;
+    grid-template-rows: 1fr minmax(300px, 3fr) 1fr;
     grid-template-columns: 1fr 2fr 1fr;
     background-color: var(--main-orange);
     max-width: 1100px;
@@ -127,6 +129,9 @@ body {
 }
 
 .resetBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 5px solid rgb(230, 110, 110);
     background-color: rgb(255, 230, 230);
     font-size: 1em;
