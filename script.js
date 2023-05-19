@@ -41,11 +41,13 @@ const gameBoard = (() => {
 // Player initiation, Get current Turn, Check if someone won
 // Play game (click event to set mark), reser click event
 const game = (() => {
-  const playerX = Player('X', 0);
-  const playerO = Player('O', 0);
+  let playerX = Player('X', 0);
+  let playerO = Player('O', 0);
   let turn = 0;
   let gameOver = false;
   const gameStat = document.querySelector('.game-stat');
+  const xScore = document.getElementById('x-score');
+  const oScore = document.getElementById('o-score');
 
   // determines whose turn it is
   const getPlayerTurn = () => {
@@ -77,12 +79,16 @@ const game = (() => {
       if (xWin === true) {
         gameStat.textContent = 'X WINS!';
         gameStat.style.transform = 'none';
-
+        // somehow, creating a new Player each win and incrementing score,
+        // accesing current score through getPLayerTurn()
+        playerX = Player('X', game.getPlayerTurn().currentPlayer.getScore() + 1);
+        xScore.textContent = getPlayerTurn().currentPlayer.getScore();
         gameOver = true;
       } if (oWin === true) {
         gameStat.textContent = 'O WINS!';
         gameStat.style.transform = 'none';
-
+        playerO = Player('O', game.getPlayerTurn().currentPlayer.getScore() + 1);
+        oScore.textContent = getPlayerTurn().currentPlayer.getScore();
         gameOver = true;
       }
     }
@@ -92,7 +98,6 @@ const game = (() => {
     if (turn === 9 && gameOver === false) {
       gameStat.textContent = 'Draw';
       gameStat.style.transform = 'none';
-
       gameOver = true;
     }
   };
