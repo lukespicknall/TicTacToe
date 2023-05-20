@@ -6,7 +6,7 @@
 :root {
     --main-orange: rgb(255, 218, 163);
     --light-purp: rgb(233, 228, 255);
-    --dark-purp:rgb(178, 162, 243);
+    --dark-purp:rgb(170, 153, 238);
 }
 
 * {
@@ -50,7 +50,7 @@ body {
 .game-stat {
     /* display: none; */
     background-color: rgb(255, 230, 230);
-    border: 5px solid rgb(230, 110, 110);
+    border: 5px outset rgb(230, 110, 110);
     border-radius: 25px;
     font-size: 40px;
     padding: 20px;
@@ -69,14 +69,14 @@ body {
 .x-stat {
     grid-area: xstat;
     background-color: var(--light-purp);
-    border: 5px solid var(--dark-purp);
+    border: 5px outset var(--dark-purp);
     margin-right: 30px;
 }
 
 .o-stat {
     grid-area: ostat;
     background-color: var(--dark-purp);
-    border: 5px solid var(--light-purp);
+    border: 5px outset var(--light-purp);
     color: white;
     margin-left: 30px;
 }
@@ -98,6 +98,7 @@ font-size: 500%;
 .score-head {
 justify-content: center;
 align-items: center;
+font-size: 150%;
 }
 
 #x-score,
@@ -129,6 +130,7 @@ font-size: 955%;
     justify-content: center;
     align-items: center;
     background-color: rgb(211, 241, 212);
+    border: 3px outset rgb(184, 202, 185);
     border-radius: 25px; 
 }
 
@@ -138,6 +140,7 @@ font-size: 955%;
     align-items: center;
     background-color: var(--light-purp);
     border-radius: 25px; 
+    border: 3px outset var(--dark-purp);
     font-size: 500%;
 }
 
@@ -148,6 +151,7 @@ font-size: 955%;
     background-color: var(--dark-purp);
     color: white;
     border-radius: 25px; 
+    border: 3px outset var(--light-purp);
     font-size: 500%;
 }
 
@@ -162,10 +166,15 @@ font-size: 955%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 5px solid rgb(230, 110, 110);
+    border: 5px outset rgb(230, 110, 110);
     background-color: rgb(255, 230, 230);
     width: 30%;
     height: 50%;
     border-radius: 25px;
     font-size: 40px;
+}
+
+.resetBtn:hover {
+        background-color: rgb(228, 210, 210);
+        cursor: pointer;
 }
