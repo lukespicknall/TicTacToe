@@ -113,7 +113,6 @@ const game = (() => {
         if (turn > 8 || e.target.textContent !== '' || gameOver === true) return;
         gameStat.style.display = 'block';
         gameStat.textContent = '😂';
-        // if (turn === 1) gameStat.style.transform = 'rotate(90deg)';
         if (turn > 0) gameStat.style.transform = `rotate(${turn * 50}deg)`;
         turn += 1;
         const squareId = e.target.id;
@@ -131,7 +130,6 @@ const game = (() => {
         }
         checkWinner(xSpots, oSpots);
         callDraw();
-        // eslint-disable-next-line quotes
       });
     });
     return { xSpots, oSpots, square };
