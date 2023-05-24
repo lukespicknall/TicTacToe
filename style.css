@@ -1,6 +1,6 @@
 @font-face {
     font-family: tester;
-    src: url(Roboto-Regular.ttf);
+    src: url(./fonts/Roboto-Regular.ttf);
 }
 
 :root {
@@ -73,6 +73,7 @@ body {
     grid-area: xstat;
     background-color: var(--light-purp);
     border: 5px outset var(--dark-purp);
+    color: black;
     margin-right: 20px;
 }
 
@@ -216,7 +217,7 @@ body {
     }
 
     .header {
-        padding: 15px 0 5px 0;
+        padding: 10px 0 0px 0;
     }
 
     #game-box {
@@ -262,6 +263,7 @@ body {
     width: 70%;
     height: 50%;
     font-size: 35px;
+    padding: 3px 0 5px 0;
     }
 
     .footer {
