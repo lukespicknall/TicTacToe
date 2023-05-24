@@ -1,10 +1,11 @@
+// Player Factory Function to create new player objects
 const Player = (mark, score) => {
   const getMark = () => mark;
   const getScore = () => score;
   return { getMark, getScore };
 };
 
-// have to call createBoard.markBox to get []
+// gameboard module.
 const gameBoard = (() => {
   const square = document.querySelectorAll('.square');
   const markBox = ['', '', '', '', '', '', '', '', ''];
@@ -23,7 +24,7 @@ const gameBoard = (() => {
     setBoard();
   };
 
-  // can be called to clear board and array and set turn count to 1
+  // can be called to clear board and array
   // and clear store of player occupied squares x/oSpots
   const reset = (a, b) => {
     for (let i = 0; i < markBox.length; i += 1) {
