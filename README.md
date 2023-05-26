@@ -1,5 +1,5 @@
 The Tic Tac Toe project in Odin. The project uses Javascript to create an 
-interactive Tic Tac Toe game, CSS to create a felxible and responsive browser
+interactive Tic Tac Toe game, CSS to create a flexible and responsive browser
 interface for desktop and mobile play, and HTML as the bones to hang it all on.
 
 The primary goal of the project is to demonstrate knowledge of factory functions,
